@@ -9,17 +9,21 @@ import com.tiven.gestion_agentes_vias.HistoricoAsignacion.HistoricoAsignacion;
 import com.tiven.gestion_agentes_vias.Vias.Via;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "agente_transito")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class AgenteTransito {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
+    private String nombreCompleto;
 
     @Column(unique = true, nullable = false)
     private String codigo;
