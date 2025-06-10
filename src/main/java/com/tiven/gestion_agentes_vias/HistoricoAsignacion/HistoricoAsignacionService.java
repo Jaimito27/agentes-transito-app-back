@@ -2,6 +2,7 @@ package com.tiven.gestion_agentes_vias.HistoricoAsignacion;
 
 import com.tiven.gestion_agentes_vias.AgenteTransito.AgenteTransitoRepository;
 import com.tiven.gestion_agentes_vias.Vias.ViaRepository;
+import com.tiven.gestion_agentes_vias.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,13 @@ public class HistoricoAsignacionService {
         return dto;
 
     }
+
+    public List<HistoricoAsignacionDTO> getAllHistorico(){
+        return historicoAsignacionRepository.findAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     public List<HistoricoAsignacionDTO> getHistoricoByAgenteCodigo(String codigoAgente){
         //validar que es el agente exista antes de bscar su hisitorico
         if(agenteTransitoRepository.findByCodigo(codigoAgente).isEmpty()){

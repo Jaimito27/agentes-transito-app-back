@@ -1,5 +1,6 @@
 package com.tiven.gestion_agentes_vias.Vias;
 
+import com.tiven.gestion_agentes_vias.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class ViaService {
     }
 
     public ViaDTO updateVia(UUID id, ViaRequestDTO viaRequestDTO){
-        Via existingVia = viaRepository.findById(id).orElseThrow(() -> ResourceNotFoundException("Via no encontrada con Id: "+ id));
+        Via existingVia = viaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Via no encontrada con Id: "+ id));
 
         existingVia.setTipo(viaRequestDTO.getTipo());
         existingVia.setEsCalleOcarrera(viaRequestDTO.getEsCalleOCarrera());

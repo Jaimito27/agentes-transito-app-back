@@ -4,7 +4,8 @@ import com.tiven.gestion_agentes_vias.HistoricoAsignacion.HistoricoAsignacion;
 import com.tiven.gestion_agentes_vias.HistoricoAsignacion.HistoricoAsignacionRepository;
 import com.tiven.gestion_agentes_vias.Vias.Via;
 import com.tiven.gestion_agentes_vias.Vias.ViaService;
-import org.apache.coyote.BadRequestException;
+import com.tiven.gestion_agentes_vias.exception.ResourceNotFoundException;
+import com.tiven.gestion_agentes_vias.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,7 +99,7 @@ public class AgenteTransitoService {
 
     @Transactional
     public AgenteTransitoDTO updateAgente(UUID id, AgenteTransitoRequestDTO agenteRequestDTO){
-        AgenteTransito existingAgente = agenteTransitoRepository.findById(id).orElseThrow(() -> ResourceNotFoundException("Agente no encontrado con Id: "+ id));
+        AgenteTransito existingAgente = agenteTransitoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Agente no encontrado con Id: "+ id));
 
         //Validar cambio de codigo (si el nuevo codigo es diferente o es el mismo)
         if(!existingAgente.getCodigo().equals(agenteRequestDTO.getCodigo()) && agenteTransitoRepository.findByCodigo(agenteRequestDTO.getCodigo()).isPresent()){
